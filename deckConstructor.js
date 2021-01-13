@@ -29,15 +29,15 @@ class Deck {
         if(this.deck.length === 0) {
             return console.log(`No cards left in the deck. Please shuffle first.`);
         };
-        const randomCard = {
+        const drawnCard = {
             point: this.points[Math.floor(Math.random() * (this.points.length))],
             suit: this.suit[Math.floor(Math.random() * (this.suit.length))]
         };
-        const index = this.deck.indexOf(randomCard) //fix this, it's returning -1 (not found). add the if -1 then not found too
+        const index = this.deck.indexOf(drawnCard) //fix this, it's returning -1 (not found). add the if -1 then not found too
         console.log(index) //delete this line
-        // this.deck.splice(index, 1);
-        this.hand.push(randomCard);
-        return console.log(randomCard)
+        // this.deck.splice(index, 1); //implement this line
+        this.hand.push(drawnCard);
+        return console.log(drawnCard)
     };
     shuffle() {
         for (let i = 0; i < this.points.length; i++) {
@@ -61,6 +61,7 @@ class Deck {
 const myDeck = new Deck();
 myDeck.shuffle();
 myDeck.draw()
+console.log(myDeck.hand)
 
 //to finish:
 //1. fix indexOf returning -1
