@@ -11,35 +11,12 @@
 
 // Implement a Deck class that will allow for the above code to work.
 
-class Card {
-    constructor(point, suit) {
-        this.point = point;
-        this.suit = suit;
-    };
-};
-
 class Deck {
     constructor() {
         this.deck = [];
-        this.points = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', 'Jack', 'Queen', 'King', 'Ace']
+        this.points = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
         this.suit = ['hearts', 'diamonds', 'clubs', 'spades'];
         this.hand = [];
-    };
-    draw() {
-        if(this.deck.length === 0) {
-            return console.log(`No cards left in the deck. Please shuffle first.`);
-        };
-        const drawnCard = {
-            point: this.points[Math.floor(Math.random() * (this.points.length))],
-            suit: this.suit[Math.floor(Math.random() * (this.suit.length))]
-        };
-        const index = this.deck.indexOf(drawnCard) //fix this, it's returning -1 (not found). add the if -1 then not found too
-        console.log(index) //delete this line
-        // this.deck.splice(index, 1); //implement this line
-        this.hand.push(drawnCard);
-        return console.log(drawnCard)
-    };
-    shuffle() {
         for (let i = 0; i < this.points.length; i++) {
             for (let j = 0; j < this.suit.length; j++) {
                 this.deck.push(
@@ -50,20 +27,42 @@ class Deck {
                 );
             };
         };
+    };
+    draw() {
+        if(this.deck.length === 0) {
+            return console.log('No cards left in the deck.');
+        };
+        //ATTEMPT #1 - making the card itself then finding it in deck array
+        // let drawnCard = {
+        //     point: this.points[Math.floor(Math.random() * (this.points.length))],
+        //     suit: this.suit[Math.floor(Math.random() * (this.suit.length))]
+        // };
+        // const index = this.deck.indexOf(drawnCard) // THIS DOESN'T WORK BECAUSE INDEXOF USES ===
+        // if (index > -1) {
+        //     this.deck.splice(index, 1);
+        //     this.hand.push(drawnCard);
+        // }
+        
+        //ATTEMPT #2 - pulling the card at a random index after the deck has already been created
+        let drawnCard = this.deck[[Math.floor(Math.random() * (this.deck.length))]];
+        let index = this.deck.indexOf(drawnCard);
+        if (index > -1) {
+            this.deck.splice(index, 1);
+            this.hand.push(drawnCard);
+        };
+        return console.log(drawnCard);
+    };
+    shuffle() {
         this.deck.sort(() => Math.random() - 0.5);
-        console.log(this.deck) //delete this
+        // console.log('Here is your shuffled deck', this.deck); // commented this out - used for testing purposes
     };
     numCardsLeft() {
-        return console.log(this.deck.length - this.hand.length); //make sure this works after fixing 1 and 2
+        return console.log(this.deck.length);
     };
 };
 
-const myDeck = new Deck();
-myDeck.shuffle();
-myDeck.draw()
-console.log(myDeck.hand)
-
-//to finish:
-//1. fix indexOf returning -1
-//2. splice card from this.deck
-//3. make sure numCardsLeft works
+const myDeck = new Deck(); //works
+myDeck.draw(); //works
+myDeck.draw(); //works
+myDeck.shuffle(); //works
+myDeck.numCardsLeft(); //works
